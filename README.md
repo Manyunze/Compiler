@@ -1,2 +1,2 @@
 # Compiler
-编译原理期末大程
+A compiler is designed by ourselves.
