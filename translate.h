@@ -2,8 +2,17 @@
  * IR Translation Module
  */
 
-#ifndef _TRANSLATE_H_
-#define _TRANSLATE_H_
+#ifndef TRANSLATE_H
+#define TRANSLATE_H
+
+typedef struct Tr_exp_ *Tr_exp;
+typedef struct Tr_expList_ *Tr_expList;
+
+typedef struct patchList_ *patchList;
+
+typedef struct Tr_level_ *Tr_level;
+typedef struct Tr_access_ *Tr_access;
+typedef struct Tr_accessList_ *Tr_accessList;
 
 extern const int F_wordSize;
 
@@ -25,16 +34,11 @@ bool GS_check(stack_node list, void *key, bool (*compare)(void*, void*));
 void* GS_peek(stack_node *plist);
 /* Generic Stack Structure END */
 
-typedef struct Tr_access_ *Tr_access;
-
-typedef struct Tr_accessList_ *Tr_accessList;
 struct Tr_accessList_ {
 	Tr_access head;
 	Tr_accessList tail;
 };
 Tr_accessList Tr_AccessList(Tr_access head, Tr_accessList tail);
-
-typedef struct Tr_level_ *Tr_level;
 
 Tr_level Tr_outermost(void);
 Tr_level Tr_newLevel(Tr_level parent, Temp_label name, U_boolList formals);
@@ -43,15 +47,15 @@ Tr_access Tr_allocLocal(Tr_level level, bool escape);
 Tr_level Tr_getParent(Tr_level parent);
 void Tr_printLevel(Tr_level level);
 
-typedef struct patchList_ *patchList;
 struct patchList_ {
 	Temp_label *head;
 	patchList tail;
 };
 static patchList PatchList(Temp_label *head, patchList tail);
+void doPatch(patchList tList, Temp_label label);
+patchList joinPatch(patchList first, patchList second);
 
-typedef struct Tr_exp_ *Tr_exp;
-typedef struct Tr_expList_ *Tr_expList;
+
 struct Tr_expList_ {
 	Tr_exp head;
 	Tr_expList tail;
@@ -112,5 +116,8 @@ void Tr_procEntryExit(Tr_level level, Tr_exp body, Tr_accessList formals, Temp_l
 
 //Fragment list
 F_fragList Tr_getResult(void);
+
+static Tr_exp Tr_ifExpNoElse(Tr_exp test, Tr_exp then);
+static Tr_exp Tr_ifExpWithElse(Tr_exp test, Tr_exp then, Tr_exp elsee);
 
 #endif

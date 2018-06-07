@@ -218,14 +218,19 @@ static patchList PatchList(Temp_label *head, patchList tail){
 	return pl;
 }
 
-static void doPatch(patchList list, Temp_label label){
-	Temp_label *l;
-	for(; list!=NULL; list=list->tail){
-		l = list->head;
-		if(l!=NULL){
-			*l = label;
-		}
-	}
+void doPatch(patchList tList, Temp_label label){
+	for(; tList; tList=tList->tail)
+    {
+        *(tList->head) = label;
+    }
+}
+
+patchList joinPatch(patchList first, patchList second)
+{
+    if(!first) return second;
+    for(; first->tail; first=first->tail);
+    first->tail = second;
+    return first;
 }
 
 //Constructors
