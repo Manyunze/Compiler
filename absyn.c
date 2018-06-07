@@ -696,7 +696,7 @@ void print_WhileExp(A_exp exp, int indent) {
 
 void print_ForExp(A_exp exp, int indent) {
   print_indent(indent);
-  printf("For: ", exp->u.forr.escape);
+  printf("For: %d", exp->u.forr.escape);
 
   print_indent(indent);
   printf(" escape = %d", exp->u.forr.escape);

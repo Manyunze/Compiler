@@ -5,8 +5,8 @@ all: main
 
 #FINAL PHASE SUBMISSION WITH OPTIMIZATION
 # Link to generate the main executable: tiger
-main: main.o semant.o types.o table.o y.tab.o lex.yy.o errormsg.o util.o symbol.o absyn.o tree.o temp.o frame.o translate.o printtree.o canon.o assem.o codegen.o flowgraph.o graph.o prabsyn.o constants.o retreplace.o retfold.o retscan.o
-	gcc -o tiger -g main.o semant.o types.o table.o symbol.o absyn.o y.tab.o lex.yy.o errormsg.o util.o tree.o temp.o frame.o translate.o printtree.o canon.o assem.o codegen.o flowgraph.o graph.o prabsyn.o constants.o retreplace.o retfold.o retscan.o
+main: main.o semant.o types.o table.o y.tab.o lex.yy.o errormsg.o util.o symbol.o absyn.o env.o tree.o temp.o frame.o translate.o printtree.o canon.o assem.o codegen.o flowgraph.o graph.o prabsyn.o constants.o retreplace.o retfold.o retscan.o 
+	gcc -o tiger -g main.o semant.o types.o table.o symbol.o absyn.o y.tab.o lex.yy.o errormsg.o util.o tree.o env.o temp.o frame.o translate.o printtree.o canon.o assem.o codegen.o flowgraph.o graph.o prabsyn.o constants.o retreplace.o retfold.o retscan.o
 
 main.o: main.c
 	gcc -g -c main.c
@@ -95,7 +95,10 @@ errormsg.o: errormsg.c errormsg.h util.h
 
 lex.yy.o: lex.yy.c y.tab.h errormsg.h util.h
 	gcc -g -c lex.yy.c
-
+	
+env.o: env.c env.h
+	gcc -g -c env.c
+	
 absyn.o: absyn.c absyn.h
 	gcc -g -c absyn.c
 
@@ -104,6 +107,7 @@ types.o: types.c types.h
 
 semant.o: semant.c semant.h
 	gcc -g -c semant.c
+
 #lex.yy.c: tiger.lex
 #	lex tiger.lex
 

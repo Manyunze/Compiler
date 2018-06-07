@@ -234,6 +234,6 @@ int main(int argc, string *argv)
 			fclose(out);
 		
 	}
-	printHelp();	
+	printHelp();
 	return 1;
 }
