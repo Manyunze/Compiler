@@ -1,13 +1,15 @@
 /*
- * Activation Record Module creation of FRAMES
+ * frame.h
+ * ------ 
+ * Activation Record Module creation of FRAMES. functions to manipulate 
+ * frames, maps and get the value of registers .
+ * 
+ * An abstract interface, the final definition of frame struct will be 
+ * implemented in mipsframe.c
  */
 #ifndef _FRAME_H_
 #define _FRAME_H_
-/*
- * frame.h
- * 
- * An abstract interface, the final definition of frame struct will be implemented in mipsframe.c
- */
+
 typedef struct F_frame_ *F_frame;
 typedef struct F_access_ *F_access;
 
@@ -85,7 +87,12 @@ F_access F_allocLocal(F_frame f, bool escape);
  */
 F_access F_staticLink();
 
-//Registers
+/*
+ * Name: F_FP, F_RA, F_RV, F_SP, F_ZERO, F_SN, F_TN, F_AN, F_VN
+ * Function: Get the register
+ * Input: NULL or register number
+ * Output: The retrieved register
+ */
 Temp_temp F_FP(void);//frame pointer
 Temp_temp F_RA(void);//return address
 Temp_temp F_RV(void);//return value, a shortcut to F_VN

@@ -1,3 +1,11 @@
+/*
+ * mipsframe.c
+ * ------ 
+ * Activation Record Module creation of FRAMES. functions to manipulate 
+ * frames, maps and get the value of registers .
+ * 
+ * The machine-specific (i.e MIPS) implementation of frame.h
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include "table.h"
@@ -21,7 +29,7 @@ Temp_temp F_FP(){
 }
 
 static Temp_temp ra = NULL;
-//Get the return value register
+//Get the return address register
 Temp_temp F_RA(){
 	if(ra==NULL){
 		ra = Temp_newtemp();
