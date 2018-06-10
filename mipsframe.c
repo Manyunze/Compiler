@@ -226,7 +226,7 @@ F_frag F_StringFrag(Temp_label label, string str){
 
 F_frag F_ProcFrag(T_stm body, F_frame frame){
 	F_frag frag = (F_frag)checked_malloc(sizeof(struct F_frag_));
-	frag->kind = ;
+	frag->kind = F_procFrag;
 	frag->u.proc.body = body;
 	frag->u.proc.frame = frame;
 	return frag;
