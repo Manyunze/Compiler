@@ -19,6 +19,13 @@ struct F_accessList_ {
 	F_accessList tail;
 };
 
+/*
+ * F_frag_
+ * ------ 
+ * Fragment struct, can be two kinds of fragments
+ * 1. the discriptor of a function on a level, including statement and frame
+ * 2. the psudo string code for statement 
+ */
 typedef struct F_frag_ *F_frag;
 struct F_frag_ {
 	enum {F_stringFrag, F_procFrag} kind;
