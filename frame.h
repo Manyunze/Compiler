@@ -3,7 +3,11 @@
  */
 #ifndef _FRAME_H_
 #define _FRAME_H_
-
+/*
+ * frame.h
+ * 
+ * An abstract interface, the final definition of frame struct will be implemented in mipsframe.c
+ */
 typedef struct F_frame_ *F_frame;
 typedef struct F_access_ *F_access;
 

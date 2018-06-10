@@ -1,11 +1,3 @@
-/*
- * CS5161 Assignment 5
- * 
- * Ming Zhou 4465225
- * 
- * Activation Record Module - MIPS architecture
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include "table.h"
