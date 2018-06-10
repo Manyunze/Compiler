@@ -1249,4 +1249,4 @@ yyoutput(c)
 yyunput(c)
    int c; {
 	unput(c);
-	}
+}

@@ -68,8 +68,6 @@ struct list_s
 %type <sym> id  
 %type <var> lvalue lvalue_ext 
 %type <explist> expseq expseq1 args args1 
-  //%type <dec> decl 
- //%type <list> args //efield_seq field_seq
 %type <type_p> ty
 %type <flist> tyfields tyfields1
 %type <fdeclist> funcdec
@@ -91,7 +89,8 @@ struct list_s
 %nonassoc IF THEN WHILE DO FOR TO
 %left ELSE
 %nonassoc ASSIGN 
-%left OR AND
+%left OR 
+%left AND
 %nonassoc EQ NEQ GT LT GE LE
 %left PLUS MINUS 
 %left TIMES DIVIDE
@@ -106,8 +105,6 @@ program:	exp    {absyn_root=$1;}
 exp:      INT         	{$$ = A_IntExp(EM_tokPos, $1); }               
         | STRING      	{$$ = A_StringExp(EM_tokPos, $1);} 
 	| lvalue        {$$ =  A_VarExp(EM_tokPos,$1);}   
-//	| exp exp_seq { $$ = A_SeqExp(EM_tokPos, A_ExpList($1, $2)); }
-//	| LPAREN RPAREN  { $$ = A_SeqExp(EM_tokPos, NULL); }
 	| LPAREN expseq RPAREN  { $$ = A_SeqExp(EM_tokPos,$2); }
 	| MINUS exp 	{$$ = A_OpExp(EM_tokPos,  A_minusOp, A_IntExp(EM_tokPos,0), $2);}
 	| NIL  		{ $$ = A_NilExp(EM_tokPos); }
@@ -117,10 +114,7 @@ exp:      INT         	{$$ = A_IntExp(EM_tokPos, $1); }
 	| FOR id ASSIGN exp TO exp DO exp  {$$ = A_ForExp(EM_tokPos, $2, $4, $6, $8); }
 	| BREAK 	{ $$ = A_BreakExp(EM_tokPos);}
 	|  LET decs IN expseq END    { $$ = A_LetExp(EM_tokPos, $2, A_SeqExp(EM_tokPos,$4)); }
- //	|  id LPAREN RPAREN    { $$ = A_CallExp(EM_tokPos, $1, NULL); }
 	|  id LPAREN args RPAREN { $$ = A_CallExp(EM_tokPos,$1, $3);}
- //	|  id LBRACE RBRACE     { $$ = A_RecordExp(EM_tokPos, $1, NULL); }
- // 	|  id LBRACE id EQ exp efield_seq RBRACE { $$ = A_RecordExp(EM_tokPos, $1, A_ExpList(A_Field(EM_tokPos, $3, $5), $6)); }
 	|  id LBRACE recfield RBRACE {$$ = A_RecordExp(EM_tokPos, $1,$3);}
 	|  id LBRACK exp RBRACK OF exp  {$$ = A_ArrayExp(EM_tokPos, $1, $3, $6); }
 	|  exp TIMES exp      { $$ = A_OpExp(EM_tokPos, A_timesOp, $1,$3); }            
@@ -166,25 +160,6 @@ expseq1:
 	exp        { $$ = A_ExpList($1,NULL);}                   
         |  exp SEMICOLON expseq1  { $$ = A_ExpList($1,$3);}
 
-
- //args:   /* empty */ 		 { $$ = NULL; }
-//	|   args COMMA exp  { LIST_ACTION($$, $1, $3); }
-
- //exp_seq: SEMICOLON exp   { $$ = A_ExpList($2, NULL); }
- //	|   exp_seq SEMICOLON exp    { LIST_ACTION($$, $1, $3); }
-
-
- //efield_seq:	/* empty */		{ $$ = NULL; }	
- //	|   efield_seq COMMA id EQ exp 	{ LIST_ACTION_F($$, $1, A_Field(EM_tokPos, $3, $5)); }
-
- //field_seq:	/* empty */    { $$ = NULL; }
- //	|   field_seq COMMA id COLON id		{ LIST_ACTION_F($$, $1, A_Field(EM_tokPos,$3, $5)); }
-
-
- //decls:
- //	/* empty */		{ $$ = NULL; }
- //	|   decls decl 		{ LIST_ACTION($$, $1, $2); }
- //
 decs:	/* empty */		{ $$ = NULL; }
 	| typedec decs  	{ $$ = A_DecList(A_TypeDec(EM_tokPos, A_NametyList($1,NULL)),$2); }
 	|   vardec decs		{ $$ =   A_DecList($1,$2); }

@@ -109,7 +109,7 @@ semant.o: semant.c semant.h
 	gcc -g -c semant.c
 
 #lex.yy.c: tiger.lex
-#	lex tiger.lex
+#	flex tiger.lex
 
 util.o: util.c util.h
 	gcc -g -c util.c
