@@ -349,7 +349,10 @@ F_frame F_newFrame(Temp_label name, U_boolList formals){
 	}
 	return frame;
 */
-
+	/*
+	 * Here specifies the access in a frame.
+	 * Create an access list.
+	 */
 	F_accessList accList = NULL;
 	F_accessList accList_head = NULL;
 

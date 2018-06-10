@@ -45,10 +45,44 @@ struct F_fragList_ {
 F_fragList F_FragList(F_frag head, F_fragList tail);
 F_fragList F_getFragList(void);
 
+/*
+ * Name: F_newFrame
+ * Function: Create a new frame and maintain the info of it
+ * Input: The name and formal state of arguments (i.e. escape or not)
+ * Output: The created frame
+ */
 F_frame F_newFrame(Temp_label name, U_boolList formals);
+
+/*
+ * Name: F_name
+ * Function: Get the name of a frame
+ * Input: A frame
+ * Output: The start label name of that frame
+ */
 Temp_label F_name(F_frame f);
+
+/*
+ * Name: F_formals
+ * Function: Get the formal lists of a frame
+ * Input: A frame
+ * Output: The formal list of that frame
+ */
 F_accessList F_formals(F_frame f);
+
+/*
+ * Name: F_allocLocal
+ * Function: Allocate a local variable to a frame
+ * Input: A frame f, a bool value indicating whether the var escapes or not
+ * Output: The generated accesss
+ */
 F_access F_allocLocal(F_frame f, bool escape);
+
+/*
+ * Name: F_staticLink
+ * Function: Generate a staticLink
+ * Input: NULL
+ * Output: The generated accesss for access
+ */
 F_access F_staticLink();
 
 //Registers
